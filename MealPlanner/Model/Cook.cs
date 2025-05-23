@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Collections.Generic;
 
 namespace MealPlanner.Model
@@ -31,7 +32,32 @@ namespace MealPlanner.Model
         public void LoadRecipeFiles(string[] recipeFiles)
         {
             //Implement Me
-            
+            string s;
+            int reccounter;
+            List<string> recl = new List<string>();
+
+            for (int i = 0; i <= recipeFiles.Length; i++)
+            {
+                reccounter = 0;
+                using StreamReader sr = new StreamReader(recipeFiles[i]);
+
+                while ((s = sr.ReadLine()) != null)
+                {
+                    recl.Add(s);
+
+                }
+                foreach (string line in recl)
+                {
+                    string[] recinfo = line.Split(" ");
+                    if (reccounter == 0)
+                    {
+                        recipeBook.Add(new Recipe(recinfo[0], double.Parse(recinfo[1])));
+                        reccounter++;
+                    }
+                    recipeBook.Add(new Recipe(recinfo[0], double.Parse(recinfo[1])),
+                     int.Parse(recinfo[2]));
+                }
+            }
         }
 
         /// <summary>
