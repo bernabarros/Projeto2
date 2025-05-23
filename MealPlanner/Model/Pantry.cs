@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace MealPlanner.Model
 {
@@ -41,6 +43,7 @@ namespace MealPlanner.Model
         public void AddIngredient(IIngredient ingredient, int quantity)
         {
             //Implement Me
+            ingredients.Add(ingredient, quantity);
         }
 
         /// <summary>
@@ -54,6 +57,11 @@ namespace MealPlanner.Model
         public bool ConsumeIngredient(IIngredient ingredient, int quantity)
         {
             //Implement Me
+            if (ingredients.ContainsKey(ingredient)&& ingredients[ingredient] < quantity)
+            {
+                ingredients[ingredient] = ingredients[ingredient] - quantity;
+                return true;
+            }
             return false;
         }
 
@@ -87,6 +95,20 @@ namespace MealPlanner.Model
         public void LoadIngredientsFile(string file)
         {
             //Implement Me
+            string s;
+            List<string> ingl = new List<string>();
+            using StreamReader sr = new StreamReader(file);
+
+            while ((s = sr.ReadLine()) != null)
+            {
+                ingl.Add(s);
+            }
+            foreach (string line in ingl)
+            {
+                string[] inginfo = line.Split(" ");
+                ingredients.Add(new Ingredient(inginfo[0], inginfo[1]),
+                 int.Parse(inginfo[2]));
+            }
         }
     }
 }
