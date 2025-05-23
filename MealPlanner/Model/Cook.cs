@@ -54,8 +54,6 @@ namespace MealPlanner.Model
                         recipeBook.Add(new Recipe(recinfo[0], double.Parse(recinfo[1])));
                         reccounter++;
                     }
-                    recipeBook.Add(new Recipe(recinfo[0], double.Parse(recinfo[1])),
-                     int.Parse(recinfo[2]));
                 }
             }
         }
